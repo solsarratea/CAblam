@@ -1,0 +1,45 @@
+* {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+body {
+  height: 100vh;
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.editor {
+    position: absolute !important;
+    display: block;
+    resize: both;
+    background-color: black;
+    border: 1px solid #ccc;
+    min-width:20%;
+    min-height:15%;
+}
+#textarea {
+    font-family: monospace;
+    font-size: 1.2em;
+    overflow: hidden;
+    margin: 0;
+    padding: 1.2em;
+    line-height: 1.5em;
+    white-space: pre-wrap;
+    resize: both;
+    min-width:15%;
+    min-height:15%;
+    border: none;
+    resize: none;
+    background: black;
+    z-index: 1;
+    color: white;
+    caret-color: red;
+    outline: none;
+    
+}
