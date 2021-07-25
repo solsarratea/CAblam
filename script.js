@@ -88,8 +88,8 @@ function setupBufferScenes() {
 var rule =  [
     0,0,
     0,0,
-    0,1,
-    0,1,
+    0,255,
+    255,255,
     0,0,
     0,0,
     0,0,
@@ -130,8 +130,11 @@ function initBufferScenes() {
 
              rule: { type: "iv",
                      value: rule },
-            offset1: {value: dotCount},
-            offset2: {value: bangCount},
+            offset1: {value:0},
+            offset2: {value: 0},
+            offset3: {value: 0},
+            offset4: {value: 0},
+            modo1: {value: false}
 
 
 		},
@@ -260,6 +263,13 @@ initBufferScenes();
 initMainScene();
 animate();
 
+var controls = {
+    char1: "!",
+    char2: ".",
+    char3: "-",
+    char4: "_",
+    modo1: false,
+}
 
 const pre = document.getElementById('pre')
 function update(text) {
@@ -269,23 +279,58 @@ function update(text) {
 
     diffusionMaterial.uniforms.rule.value[index] = !current;
 
-    updateDotCount(text);
-    updateBangCount(text);
+    diffusionMaterial.uniforms.offset1.value = updateCharCount(text, controls.char1,100);
+    diffusionMaterial.uniforms.offset2.value = updateCharCount(text, controls.char2,100);
+    diffusionMaterial.uniforms.offset3.value = updateCharCount(text, controls.char3,10);
+
+    diffusionMaterial.uniforms.offset4.value = updateCharCount(text, controls.char4,20);
 
 }
 
-function updateBangCount(txt) {
-    bangCount = (txt.split('!') || []).length-1;
 
-    diffusionMaterial.uniforms.offset1.value =(bangCount%100)/99;
+function updateCharCount(txt,chr,v) {
+    const count = (txt.split(chr) || []).length-1;
+    return (count%v)/(v-1);
+
 }
 
-function updateDotCount(txt) {
-    dotCount = (txt.split('.') || []).length-1;
-
-    diffusionMaterial.uniforms.offset2.value = (dotCount%100)/99;
-}
 
 $(document).ready(function() {
     $(".editor").draggable().resizable();
 });
+
+function addGuiControls(){
+   const datGui  = new dat.GUI({ autoPlace: true });
+
+    var folder;
+    var toggleModo1 = { modo1:function(){
+        controls.modo1 = !controls.modo1;
+
+        diffusionMaterial.uniforms.modo1.value = controls.modo1;
+    }};
+
+    folder = datGui.addFolder(`CAblan: txt->img`);
+    folder.add(toggleModo1,'modo1').name("cool mode");
+    //folder.add(toggleModo2,'mode 2');
+
+    folder.add(controls, "char1").name("rule threshold").onFinishChange(function (value) {
+        controls.char1 = value;
+    });
+
+    folder.add(controls, "char2").name("pixel size").onFinishChange(function (value) {
+        controls.char2 = value;
+    });
+
+    folder.add(controls, "char3").name("saturation ").onFinishChange(function (value) {
+        controls.char3 = value;
+    });
+    folder.add(controls, "char4").name("hue").onFinishChange(function (value) {
+        controls.char4 = value;
+    });
+
+
+folder.open();
+
+}
+
+addGuiControls()

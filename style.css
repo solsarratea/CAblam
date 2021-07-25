@@ -22,13 +22,14 @@ body {
     border: 1px solid #ccc;
     min-width:20%;
     min-height:15%;
+    padding:.5em;
 }
 #textarea {
+    height: inherit;
     font-family: monospace;
     font-size: 1.2em;
     overflow: hidden;
     margin: 0;
-    padding: 1.2em;
     line-height: 1.5em;
     white-space: pre-wrap;
     resize: both;
@@ -41,5 +42,5 @@ body {
     color: white;
     caret-color: red;
     outline: none;
-    
+    height: max-height;
 }
