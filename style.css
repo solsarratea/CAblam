@@ -44,3 +44,9 @@ body {
     outline: none;
     height: max-height;
 }
+
+
+.dg .main {
+    display: block !important;
+
+}
