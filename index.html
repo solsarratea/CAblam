@@ -43,7 +43,6 @@ vec2 rotate(vec2 v, float a) {
 
 void main() {
 	vec4 inText = texture2D(channel0,texCoordVarying);
-	// vec4 inText2 = texture2D(channel0,texCoordVarying * 0.9);
 	
 	gl_FragColor = inText;
 }
@@ -110,17 +109,21 @@ precision highp float;
       return dot(color, vec3(0.299, 0.587, 0.114));
   }
 
+  
+
 void main() {
   vec2 pixel = gl_FragCoord.xy / resolution;
   vec3 finalColor;
   vec3 webcamCapture = texture2D(webcam, pixel).rgb;
-  vec3 lastFrame = texture2D(backbuffer, pixel + vec2(0.0, 0.)).rgb;
+    vec3 lastFrame = texture2D(backbuffer, pixel).rgb;
   vec3 color = texture2D(backbuffer, pixel).rgb;
+  color = hsv2rgb(color);
 
     float pixelSize = 1.+mix(-.5,200.,offset2);
     vec2 pos =
         vec2(floor(gl_FragCoord.x / pixelSize) * pixelSize + pixelSize / 2.0,
              floor(gl_FragCoord.y / pixelSize) * pixelSize + pixelSize / 2.0);
+
 
     float threshold = 0.49 +mix(-.5,.5,offset1);
     float neighbors = 0.0;
@@ -133,38 +136,29 @@ void main() {
         }
     };
 
-    float status = step(threshold, color.r);
-    neighbors -= status;
-    
-    //gl_FragColor = vec4(mix(1.-1.2*webcamCapture,max(lastFrame,webcamCapture), 0.9)-0.8*color,1.);
+
+
+    float status = step(threshold, color.r); //status = previousState
+    neighbors -= status; //neighbors == total
 
     
-    int ruleIndex = 2*int(neighbors);
-    int ruleWhen = rule[ruleIndex];
-    int ruleThen = rule[ruleIndex+1];
-
-    float newState = float(!bool(ruleWhen == int(status)) || bool(ruleThen));
-
-    color = vec3(newState)*0.5+0.5*webcamCapture;
-
     
-    vec3 render = webcamCapture + lastFrame*newState*0.2;
+    int ruleIndex = int(mix(neighbors, 2.*neighbors, 1.-status));
 
-    float rnd1 = fract(sin(dot(pos + time * 0.001, vec2(14.9898,78.233))) * 43758.5453);
-    render = mix(render, lastFrame, step(0.5, rnd1));
+    float newState = float(rule[ruleIndex]);
 
-   if (render.b > 0.004) {
-        render = max(render - 0.004, 0.25);
-    }
-
-   //vec3 webAfter = texture2D(webcam, pixel+color.rg*0.05).rgb;
+    vec3 webAfter = texture2D(webcam, pixel+newState*0.05*vec2(cos(time*0.5),sin(time*0.5))).rgb;
     
-    render = mix(render, mix(1.-1.2*webcamCapture,max(lastFrame,webcamCapture), 0.9)-0.8*color, float(modo1));
-
+    vec3 render = mix(webAfter, max(webcamCapture,lastFrame), 1.-luma(color));
+ 
     render = satur(render, mix(0.,3.,offset3));
     render = hueShift(render, mix(0.,3.,offset4));
+    vec3 bb = texture2D(backbuffer, pixel).rgb;
+    
+    
+    render = mix(mix(render,bb*bb-bb*4.,0.2), webAfter, newState)*float(1.-float(modo1));
 
-    gl_FragColor = vec4(render,1.);
+    gl_FragColor = vec4(mix(render,webcamCapture,float(modo1)),1.);
 
 }
 </script>
