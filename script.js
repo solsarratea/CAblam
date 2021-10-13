@@ -86,16 +86,10 @@ function setupBufferScenes() {
 
 // Set up initial state
 var rule =  [
-    0,0,
-    0,0,
-    0,255,
-    255,255,
-    0,0,
-    0,0,
-    0,0,
-    0,0,
-    0,0
+    0,0,1,1,0,0,0,0,0,
+    0,0,0,1,0,0,0,0,0
 ]
+
 var dotCount = 0;
 var bangCount =0;
 
@@ -299,6 +293,7 @@ $(document).ready(function() {
     $(".editor").draggable().resizable();
 });
 
+
 function addGuiControls(){
    const datGui  = new dat.GUI({ autoPlace: true });
 
@@ -310,7 +305,7 @@ function addGuiControls(){
     }};
 
     folder = datGui.addFolder(`CAblan: txt->img`);
-    folder.add(toggleModo1,'modo1').name("cool mode");
+    folder.add(toggleModo1,'modo1').name("clean");
     //folder.add(toggleModo2,'mode 2');
 
     folder.add(controls, "char1").name("rule threshold").onFinishChange(function (value) {
