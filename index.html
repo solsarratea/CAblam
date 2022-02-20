@@ -12,7 +12,86 @@
 	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
 </head>
 <body>
-<div class=editor>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js" integrity="sha512-yNJzAsg5JyP91u+sLHlUDULMBd3hmEiVkYeeN1cQBKaLZ7EyT6oH2u5THNIRM2Fu6VKcZJv+F/QAp1h/qzy9Ow==" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	</head>
+	<body>
+        <a id="info" class="info" >
+        <span class="fab fas fa-info-circle"></span>
+        <span class="text">About</span>
+      </a>
+      <a id="screenshot" class="info" >
+        <span class="fab fas fa-camera-retro fa-2x"></span>
+        <span class="text">Save image</span>
+      </a>
+      <!------------------------------------------------------>
+      <!-- <a id="btn" class="info">                        -->
+      <!--   <span class="fab fas fa-plus-circle "></span>  -->
+      <!--   <span class="text">Add background image</span> -->
+      <!-- </a>                                             -->
+      <!------------------------------------------------------>
+      <a id="btn2" class="info" >
+        <span class="fab fas fa-align-center "></span>
+        <span class="text">Toggle editor</span>
+      </a>
+      <div id="addSourceImage" class="modal">
+        <div class="modal-header">
+          <p>Visible Image</p>
+          <span class="close">&times;
+          </span>
+        </div>
+        <div class="modal-content">
+          <form enctype="multipart/form-data">
+            <input class="button" id="uploadSource" type="file"/>
+            <label for="uploadSource">Upload image that will be visible</label>
+          </form>
+        </div>
+      </div>
+
+
+       <div id="showInfo" class="modal">
+        <div class="modal-header">
+          <h2>CAblam</h2>
+          <span class="close">&times;
+          </span>
+        </div>
+        <div class="modal-content">
+          <form enctype="multipart/form-data">
+            <p> This tool was created for the <a href="https://hyperlink.academy/courses/digital-alchemy/89">Digital Alchemy Course</a>.
+             <h3>WHAT</h3>
+             It is a Livecoding environment for creating visual effects while writing ASCII characters.
+            <p>It was built to create an environment language-agnostic for performing. It uses  <a href="https://en.wikipedia.org/wiki/Cellular_automaton">Cellular automaton</a> simulation over source (webcam capture/image) </p>
+            <h3>HOW</h3>
+            <p>Write on the floating black square</p>
+            <p>ASCII characters are being interpretated as numbers,  updating  CA rules.</p>
+            <p>Special charaters defined in the <b>Controls</b> folder are mapped to handle: </p>
+            <ul>
+              <li>rule threshold: controls the <i>amount</i> of effect</li>
+              <li>pixel size </li>
+              <li>saturation: controls the color saturation</li>
+              <li>hue: performs hue shifts</li>
+
+            </ul>
+          </form>
+        </div>
+      </div>
+      <a href="https://github.com/solsarratea/CAblam" class="info"
+         title="View source on Github" target="_blank">
+        <span class="fab fa-github"></span>
+        <span class="text">View source</span>
+      </a>
+      <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="info" id="tweetB" target="_blank">
+        <i class="fab fa-twitter"></i>
+        <span class="text">Share</span>
+      </a>
+      <a href='https://ko-fi.com/Q5Q62LLVG' class="info" target="_blank">
+        <span class="fab fa-gratipay"></span>
+        <span class="text">Support </span>
+      </a>
+
+
+<div class="editor" id="editor">
     <textarea
         id=textarea
         spellcheck=false
@@ -22,6 +101,7 @@
     ></textarea>
 </div>
 <div id="shadercollab"></div>
+<canvas id="canvas"></canvas>
 
 <script id="vertex" type="x-shader/x-vertex">
 varying vec2 texCoordVarying;
@@ -164,6 +244,9 @@ void main() {
 </script>
 <!-- partial -->
 <script type="text/javascript" src="libs/dat.gui.min.js"></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'></script><script  src="./script.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'></script>
+<script  src="./libs/controls.js"></script>
+<script  src="./libs/fileSaver.js"></script>
+<script  src="./script.js"></script>
 </body>
 </html>

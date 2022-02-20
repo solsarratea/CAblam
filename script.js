@@ -38,10 +38,11 @@ function initWebcamCapture() {
 let camera, scene, renderer, clock;
 function setupMainScene() {
 	const container = document.getElementById("shadercollab");
+    const canvas =  document.getElementById("canvas");
 
 	scene = new THREE.Scene();
 	camera = new THREE.Camera();
-	renderer = new THREE.WebGLRenderer({ preserveDrawingBuffer: true });
+	renderer = new THREE.WebGLRenderer({ canvas: canvas, preserveDrawingBuffer: true });
 
 	const DPR = window.devicePixelRatio ? window.devicePixelRatio : 1;
 	renderer.setPixelRatio(DPR);
@@ -154,7 +155,6 @@ function onWindowResize() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-/* OPTION #1 TO RENDER */
 function render_1() {
 	diffusionMaterial.uniforms.time.value = clock.getElapsedTime();
 
@@ -182,71 +182,9 @@ function render_1() {
 	renderer.render(scene, camera);
 }
 
-/* OPTION #2 TO RENDER */
-function render_2() {
-	diffusionMaterial.uniforms.time.value = clock.getElapsedTime();
-
-	if (renderer.info.render.frame % 1 == 0) {
-		for (let i = 0; i < 2; i++) {
-			// Apply Copy shader and save output in alt
-			renderer.setRenderTarget(alt);
-			renderer.render(copyScene, camera);
-			renderer.setRenderTarget(null);
-			renderer.clear();
-
-			// Apply Diffusion shader and save output in ping
-			renderer.setRenderTarget(ping);
-			renderer.render(diffusionScene, camera);
-			renderer.setRenderTarget(null);
-			renderer.clear();
-
-			// Swap ping and pong
-			const temp = pong;
-			pong = ping;
-			ping = temp;
-
-			// Update channels
-			diffusionMaterial.uniforms.backbuffer.value = alt;
-			copyMaterial.uniforms.channel0.value = pong;
-		}
-
-		quad.material.map = ping;
-	}
-
-	// Render Main Scene
-	renderer.render(scene, camera);
-}
-
-/* OPTION #3 TO RENDER */
-function render_3() {
-	diffusionMaterial.uniforms.time.value = clock.getElapsedTime();
-
-	if (renderer.info.render.frame % 2 == 0) {
-		for (let i = 0; i < 2; i++) {
-			renderer.setRenderTarget(ping);
-			renderer.render(copyScene, camera);
-			renderer.setRenderTarget(null);
-			renderer.clear();
-
-			renderer.setRenderTarget(pong);
-			renderer.render(diffusionScene, camera);
-			renderer.setRenderTarget(null);
-			renderer.clear();
-
-			// Update channels
-			diffusionMaterial.uniforms.backbuffer.value = ping;
-			copyMaterial.uniforms.channel0.value = pong;
-		}
-	}
-
-	// Render Copy Scene
-	renderer.render(copyScene, camera);
-}
 
 function animate() {
 	 render_1();
-	// render_2();
-	// render_3();
 	requestAnimationFrame(animate);
 }
 
@@ -304,7 +242,7 @@ function addGuiControls(){
         diffusionMaterial.uniforms.modo1.value = controls.modo1;
     }};
 
-    folder = datGui.addFolder(`CAblan: txt->img`);
+    folder = datGui.addFolder(`Controls`);
     folder.add(toggleModo1,'modo1').name("clean");
     //folder.add(toggleModo2,'mode 2');
 
