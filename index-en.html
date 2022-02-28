@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>CAblam</title>
+  <title>txt2img</title>
   <link rel="stylesheet" href="./style.css">
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
@@ -19,11 +19,11 @@
 	<body>
         <a id="info" class="info" >
         <span class="fab fas fa-info-circle"></span>
-        <span class="text">Más Info</span>
+        <span class="text">About</span>
       </a>
       <a id="screenshot" class="info" >
         <span class="fab fas fa-camera-retro fa-2x"></span>
-        <span class="text">Captura de pantalla</span>
+        <span class="text">Save image</span>
       </a>
       <!------------------------------------------------------>
       <!-- <a id="btn" class="info">                        -->
@@ -33,18 +33,18 @@
       <!------------------------------------------------------>
       <a id="btn2" class="info" >
         <span class="fab fas fa-align-center "></span>
-        <span class="text">Mostrar editor</span>
+        <span class="text">Toggle editor</span>
       </a>
       <div id="addSourceImage" class="modal">
         <div class="modal-header">
-          <p> Imagen visible</p>
+          <p>Visible Image</p>
           <span class="close">&times;
           </span>
         </div>
         <div class="modal-content">
           <form enctype="multipart/form-data">
             <input class="button" id="uploadSource" type="file"/>
-            <label for="uploadSource"></label>
+            <label for="uploadSource">Upload image that will be visible</label>
           </form>
         </div>
       </div>
@@ -58,32 +58,32 @@
         </div>
         <div class="modal-content">
           <form enctype="multipart/form-data">
-            <p> Esta herramienta fue creada para el curso <a href="https://hyperlink.academy/courses/digital-alchemy/89">Digital Alchemy</a>.
-             <h3>QUÉ ES</h3>
-            <p>Es un entorno de Livecoding para la creación de efectos visuales programados de acuerdo a caracteres ASCII. Fue creado para generar un entorno agonóstico a lenguajes. Es decir, escribiendo texto simple se estaría programando el comportamiento del mismo. Usa  una simulación de <a href="https://es.wikipedia.org/wiki/Aut%C3%B3mata_celular">Autómatas celulares</a> sobre una base (cámara web) </p>
-            <h3>CÓMO SE USA</h3>
-            <p>Escribiendo en el cuadrado negro.</p>
-            <p>Los caracteres ASCII son interpretados como números,  actualizando las reglas de la simulación.</p>
-            <p>Hay caracteres especiales establecidos en la carpeta <b>Controls</b> para controlar: </p>
+            <p> This tool was created for the <a href="https://hyperlink.academy/courses/digital-alchemy/89">Digital Alchemy Course</a>.
+             <h3>WHAT</h3>
+             It is a Livecoding environment for creating visual effects while writing ASCII characters.
+            <p>It was built to create an environment language-agnostic for performing. It uses  <a href="https://en.wikipedia.org/wiki/Cellular_automaton">Cellular automaton</a> simulation over source (webcam capture/image) </p>
+            <h3>HOW</h3>
+            <p>Write on the floating black square</p>
+            <p>ASCII characters are being interpretated as numbers,  updating  CA rules.</p>
+            <p>Special charaters defined in the <b>Controls</b> folder are mapped to handle: </p>
             <ul>
-              <li>rule threshold:controla la <i>cantidad</i> de efecto</li>
-              <li>pixel size: el tamaño del píxel </li>
-              <li>saturation: cotrola la saturación de color (intensidad) </li>
-              <li>hue: aplica un cambio de tinte </li>
-              </ul>
-             <p>Por ejemplo, si la letra <b>e</b> controla el tamaño del pixel, escribiendo muchas veces el mismo se puede ver como cambia de tamaño.</p>
-         
-            </form>
+              <li>rule threshold: controls the <i>amount</i> of effect</li>
+              <li>pixel size </li>
+              <li>saturation: controls the color saturation</li>
+              <li>hue: performs hue shifts</li>
+
+            </ul>
+          </form>
         </div>
       </div>
       <a href="https://github.com/solsarratea/CAblam" class="info"
          title="View source on Github" target="_blank">
         <span class="fab fa-github"></span>
-        <span class="text">Ver código fuente</span>
+        <span class="text">View source</span>
       </a>
       <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="info" id="tweetB" target="_blank">
         <i class="fab fa-twitter"></i>
-        <span class="text">Compartir</span>
+        <span class="text">Share</span>
       </a>
       <a href='https://ko-fi.com/Q5Q62LLVG' class="info" target="_blank">
         <span class="fab fa-gratipay"></span>
@@ -96,7 +96,7 @@
         id=textarea
         spellcheck=false
         oninput="update(this.value)"
-      placeholder="Escribe texto.."
+      placeholder="Write your text"
       autofocus
     ></textarea>
 </div>

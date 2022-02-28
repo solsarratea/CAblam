@@ -196,10 +196,10 @@ initMainScene();
 animate();
 
 var controls = {
-    char1: "!",
-    char2: ".",
-    char3: "-",
-    char4: "_",
+    char1: "a",
+    char2: "e",
+    char3: "!",
+    char4: ".",
     modo1: false,
 }
 
