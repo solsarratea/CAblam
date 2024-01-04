@@ -1,3 +1,5 @@
+This project evolved into [THIS ONE](https://github.com/solsarratea/catgpt)
+
 # CAblam: Celular Automatas que hablan
 
 Livecoding environment for creating visual effects while writing ASCII characters.
